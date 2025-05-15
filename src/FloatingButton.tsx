@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  PanResponder,
-  Animated,
-} from 'react-native';
-import type { ViewStyle } from 'react-native';
+import React, { useRef } from 'react';
+import { StyleSheet, Animated } from 'react-native';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import Icon, { Icons } from './Icons';
 
 interface FloatingButtonProps {
   color?: string;
@@ -20,61 +16,85 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
   position,
   onPress,
 }) => {
-  const [pan] = useState(new Animated.ValueXY());
+  const translateX = useRef(new Animated.Value(position?.right || 15)).current;
+  const translateY = useRef(
+    new Animated.Value(position?.bottom || 100)
+  ).current;
+  const lastOffset = useRef({
+    x: position?.right || 15,
+    y: position?.bottom || 100,
+  }).current;
 
-  const panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
-      useNativeDriver: false,
-    }),
-    onPanResponderRelease: () => {
-      Animated.spring(pan, {
-        toValue: { x: 0, y: 0 },
-        useNativeDriver: false,
-      }).start();
-    },
-  });
+  const onGestureEvent = Animated.event(
+    [
+      {
+        nativeEvent: {
+          translationX: translateX,
+          translationY: translateY,
+        },
+      },
+    ],
+    { useNativeDriver: false }
+  );
 
-  const buttonStyle: ViewStyle = {
-    ...styles.button,
-    backgroundColor: color,
-    ...(position ? { bottom: position.bottom, right: position.right } : {}),
+  const onHandlerStateChange = (event: any) => {
+    if (event.nativeEvent.oldState === State.ACTIVE) {
+      lastOffset.x += event.nativeEvent.translationX;
+      lastOffset.y += event.nativeEvent.translationY;
+      translateX.setOffset(lastOffset.x);
+      translateX.setValue(0);
+      translateY.setOffset(lastOffset.y);
+      translateY.setValue(0);
+    }
   };
 
   return (
-    <Animated.View
-      style={[
-        buttonStyle,
-        { transform: [{ translateX: pan.x }, { translateY: pan.y }] },
-      ]}
-      {...panResponder.panHandlers}
+    <PanGestureHandler
+      onGestureEvent={onGestureEvent}
+      onHandlerStateChange={onHandlerStateChange}
     >
-      <TouchableOpacity onPress={onPress} style={styles.touchable}>
-        {icon}
-      </TouchableOpacity>
-    </Animated.View>
+      <Animated.View
+        style={[
+          styles.draggableContainer,
+          {
+            transform: [{ translateX: translateX }, { translateY: translateY }],
+          },
+        ]}
+      >
+        <Animated.View
+          style={[styles.button, { backgroundColor: color }]}
+          onTouchEnd={onPress}
+        >
+          {icon || (
+            <Icon
+              type={Icons.MaterialIcons}
+              name="expand-less"
+              size={30}
+              color="#fff"
+            />
+          )}
+        </Animated.View>
+      </Animated.View>
+    </PanGestureHandler>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
+  draggableContainer: {
     position: 'absolute',
+    zIndex: 1,
+  },
+  button: {
     width: 56,
     height: 56,
     borderRadius: 28,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-  },
-  touchable: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 
