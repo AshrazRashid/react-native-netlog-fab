@@ -8,7 +8,7 @@ PODS:
   - hermes-engine (0.79.2):
     - hermes-engine/Pre-built (= 0.79.2)
   - hermes-engine/Pre-built (0.79.2)
-  - NetlogFab (0.1.3):
+  - NetlogFab (0.1.4):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1913,7 +1913,7 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 314be5250afa5692b57b4dd1705959e1973a8ebe
-  NetlogFab: 3e4c7a1c1783c32089fefcb3b82010b9e8667dbb
+  NetlogFab: dd1470a9d105ca34f57955791d35a10b7b041de7
   RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
   RCTDeprecation: 83ffb90c23ee5cea353bd32008a7bca100908f8c
   RCTRequired: eb7c0aba998009f47a540bec9e9d69a54f68136e
@@ -1981,4 +1981,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 091ae8b5005e5c1c8026af5439fdb3f2829adcfa
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.15.2

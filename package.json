@@ -1,6 +1,6 @@
 {
   "name": "react-native-netlog-fab",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Floating action button for network logging in React Native apps.",
   "keywords": [
     "react-native",
