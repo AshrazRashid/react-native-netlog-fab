@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { StyleSheet, Animated } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Icon, { Icons } from './Icons';
@@ -24,6 +24,11 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
     x: position?.right || 15,
     y: position?.bottom || 100,
   }).current;
+
+  useEffect(() => {
+    translateX.setValue(position?.right || 15);
+    translateY.setValue(position?.bottom || 100);
+  }, [position?.right, position?.bottom, translateX, translateY]);
 
   const onGestureEvent = Animated.event(
     [
