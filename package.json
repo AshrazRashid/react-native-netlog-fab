@@ -1,7 +1,14 @@
 {
   "name": "react-native-netlog-fab",
   "version": "0.1.0",
-  "description": "It is an wrapper for react-native-network-logger",
+  "description": "Floating action button for network logging in React Native apps.",
+  "keywords": [
+    "react-native",
+    "network",
+    "logging",
+    "debug",
+    "FAB"
+  ],
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
@@ -40,14 +47,6 @@
     "prepare": "bob build",
     "release": "release-it --only-version"
   },
-  "keywords": [
-    "react-native",
-    "ios",
-    "android",
-    "network-logger",
-    "debug",
-    "development"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AshrazRashid/react-native-netlog-fab.git"
