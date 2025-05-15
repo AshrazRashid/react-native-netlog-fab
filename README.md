@@ -10,15 +10,12 @@ npm install react-native-netlog-fab
 
 ## Usage
 
-
 ```js
-import { multiply } from 'react-native-netlog-fab';
+import { NetworkLoggerFAB } from 'react-native-netlog-fab';
 
-// ...
-
-const result = multiply(3, 7);
+// In your component:
+<NetworkLoggerFAB />;
 ```
-
 
 ## Contributing
 

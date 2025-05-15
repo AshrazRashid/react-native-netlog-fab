@@ -1,12 +1,10 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from 'react-native-netlog-fab';
-
-const result = multiply(3, 7);
+import { View, StyleSheet } from 'react-native';
+import { NetworkLoggerFAB } from 'react-native-netlog-fab';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <NetworkLoggerFAB />
     </View>
   );
 }
@@ -14,7 +12,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
 });
