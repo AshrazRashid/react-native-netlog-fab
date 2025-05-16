@@ -1,8 +1,7 @@
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 const path = require('path');
-const { getDefaultConfig } = require('@react-native/metro-config');
-const { withMetroConfig } = require('react-native-monorepo-config');
 
-const root = path.resolve(__dirname, '..');
+const monorepoRoot = path.resolve(__dirname, '..');
 
 /**
  * Metro configuration
@@ -10,7 +9,19 @@ const root = path.resolve(__dirname, '..');
  *
  * @type {import('metro-config').MetroConfig}
  */
-module.exports = withMetroConfig(getDefaultConfig(__dirname), {
-  root,
-  dirname: __dirname,
+module.exports = mergeConfig(getDefaultConfig(__dirname), {
+  watchFolders: [monorepoRoot],
+  resolver: {
+    nodeModulesPaths: [
+      path.resolve(__dirname, 'node_modules'),
+      path.resolve(monorepoRoot, 'node_modules'),
+    ],
+    extraNodeModules: {
+      'react-native-network-logger': path.resolve(
+        monorepoRoot,
+        'node_modules/react-native-network-logger'
+      ),
+      'react-native-netlog-fab': path.resolve(monorepoRoot, 'lib/module'),
+    },
+  },
 });
