@@ -48,4 +48,5 @@ declare module 'react-native-gesture-handler' {
   }
 
   export const PanGestureHandler: ComponentType<PanGestureHandlerProps>;
+  export const GestureHandlerRootView: ComponentType<any>;
 }

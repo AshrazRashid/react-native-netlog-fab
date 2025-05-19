@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import NetworkLogger from 'react-native-network-logger';
 
 interface LoggerModalProps {
   visible: boolean;
@@ -28,7 +27,11 @@ const LoggerModal: React.FC<LoggerModalProps> = ({
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
           </View>
-          <NetworkLogger />
+          <View
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Text style={{ color: '#888' }}>Network logging is disabled.</Text>
+          </View>
         </View>
       </View>
     </Modal>

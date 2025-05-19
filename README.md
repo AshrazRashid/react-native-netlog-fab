@@ -20,7 +20,11 @@ Whether you're debugging API issues, inspecting backend communication, or valida
 
 ```sh
 npm install react-native-netlog-fab
+# or using yarn
+yarn add react-native-netlog-fab
 ```
+
+For more details, see the Medium article: [Introducing react-native-netlog-fab: Effortless In-App Network Debugging for React Native](https://medium.com/@ashraz.developer/introducing-react-native-netlog-fab-effortless-in-app-network-debugging-for-react-native-862ee0d57395)
 
 ## Usage
 

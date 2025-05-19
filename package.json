@@ -1,6 +1,6 @@
 {
   "name": "react-native-netlog-fab",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Floating action button for network logging in React Native apps.",
   "keywords": [
     "react-native",
@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "react-native-gesture-handler": "^2.14.0",
-    "react-native-network-logger": "^2.0.0"
+    "react-native-netlog-fab": "^0.1.5"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -74,9 +74,12 @@
     "@eslint/eslintrc": "^3.3.0",
     "@eslint/js": "^9.22.0",
     "@evilmartians/lefthook": "^1.5.0",
-    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native-community/cli": "18.0.0",
+    "@react-native-community/cli-platform-android": "18.0.0",
+    "@react-native-community/cli-platform-ios": "18.0.0",
     "@react-native/babel-preset": "0.79.2",
     "@react-native/eslint-config": "^0.78.0",
+    "@react-native/metro-config": "0.79.2",
     "@release-it/conventional-changelog": "^9.0.2",
     "@types/jest": "^29.5.5",
     "@types/react": "^18.0.0",
