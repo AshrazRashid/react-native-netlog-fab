@@ -6,19 +6,39 @@ interface LoggerModalProps {
   visible: boolean;
   onClose: () => void;
   height?: number;
+  theme?:
+    | 'light'
+    | 'dark'
+    | {
+        colors?: {
+          background?: string;
+          text?: string;
+          border?: string;
+          [key: string]: string | undefined;
+        };
+      };
+  sort?: 'asc' | 'desc';
+  maxRows?: number;
+  compact?: boolean;
+  onBackPressed?: () => void;
 }
 
 const LoggerModal: React.FC<LoggerModalProps> = ({
   visible,
   onClose,
   height = 0.7,
+  theme = 'light',
+  sort = 'desc',
+  maxRows,
+  compact = false,
+  onBackPressed,
 }) => {
   return (
     <Modal
       visible={visible}
       transparent
       animationType="slide"
-      onRequestClose={onClose}
+      onRequestClose={onBackPressed || onClose}
     >
       <View style={styles.modalOverlay}>
         <View style={[styles.modalContent, { height: `${height * 100}%` }]}>
@@ -29,7 +49,12 @@ const LoggerModal: React.FC<LoggerModalProps> = ({
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1 }}>
-            <NetworkLogger />
+            <NetworkLogger
+              theme={theme}
+              sort={sort}
+              maxRows={maxRows}
+              compact={compact}
+            />
           </View>
         </View>
       </View>

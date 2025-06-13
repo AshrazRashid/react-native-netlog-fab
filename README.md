@@ -24,6 +24,22 @@ npm install react-native-netlog-fab
 yarn add react-native-netlog-fab
 ```
 
+## Dependencies
+
+This package has the following dependencies:
+
+### Required Peer Dependencies
+
+- `react` >= 16.8.0
+- `react-native` >= 0.60.0
+- `react-native-network-logger` ^2.0.0
+
+### Required Dependencies
+
+- `react-native-gesture-handler` ^2.25.0
+
+Make sure to install these dependencies in your project. The peer dependencies are required for the package to work properly, while the required dependencies will be installed automatically when you install `react-native-netlog-fab`.
+
 For more details, see the Medium article: [Introducing react-native-netlog-fab: Effortless In-App Network Debugging for React Native](https://medium.com/@ashraz.developer/introducing-react-native-netlog-fab-effortless-in-app-network-debugging-for-react-native-862ee0d57395)
 
 ## Usage

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { StyleSheet, Animated } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import Icon, { Icons } from './Icons';
 
@@ -8,6 +9,7 @@ interface FloatingButtonProps {
   color?: string;
   icon?: React.ReactNode;
   position?: { bottom?: number; right?: number };
+  style?: ViewStyle;
 }
 
 const FloatingButton: React.FC<FloatingButtonProps> = ({
@@ -15,6 +17,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
   color = 'lightgray',
   icon,
   position,
+  style,
 }) => {
   const translateX = useRef(new Animated.Value(position?.right || 15)).current;
   const translateY = useRef(
@@ -46,6 +49,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
       <Animated.View
         style={[
           styles.draggableContainer,
+          style,
           {
             transform: [{ translateX: translateX }, { translateY: translateY }],
           },
