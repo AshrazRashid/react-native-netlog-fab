@@ -85,7 +85,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.27.0",
     "@evilmartians/lefthook": "^1.11.13",
-    "@react-native-community/cli": "18.0.0",
+    "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "18.0.0",
     "@react-native-community/cli-platform-ios": "18.0.0",
     "@react-native/babel-preset": "0.79.2",
