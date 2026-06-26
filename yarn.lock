@@ -10484,7 +10484,7 @@ __metadata:
     eslint-plugin-prettier: ^5.4.0
     jest: ^29.7.0
     prettier: ^3.5.3
-    react: ^19.1.0
+    react: 19.0.0
     react-native: ^0.79.2
     react-native-builder-bob: ^0.40.11
     react-native-gesture-handler: ^2.25.0
