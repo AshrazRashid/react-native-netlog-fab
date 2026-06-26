@@ -10,6 +10,7 @@ runs:
         node-version-file: .nvmrc
 
     - name: Enable Corepack and activate Yarn
+      shell: bash
       run: |
         corepack enable
         corepack prepare yarn@3.6.1 --activate
