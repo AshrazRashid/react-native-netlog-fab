@@ -2,25 +2,51 @@ import React from 'react';
 import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import NetworkLogger from 'react-native-network-logger';
 
+type LoggerTheme =
+  | 'light'
+  | 'dark'
+  | {
+      colors?: {
+        background?: string;
+        text?: string;
+        border?: string;
+        [key: string]: string | undefined;
+      };
+    };
+
 interface LoggerModalProps {
   visible: boolean;
   onClose: () => void;
   height?: number;
-  theme?:
-    | 'light'
-    | 'dark'
-    | {
-        colors?: {
-          background?: string;
-          text?: string;
-          border?: string;
-          [key: string]: string | undefined;
-        };
-      };
+  theme?: LoggerTheme;
   sort?: 'asc' | 'desc';
   maxRows?: number;
   compact?: boolean;
   onBackPressed?: () => void;
+}
+
+function getModalColors(theme: LoggerTheme) {
+  if (theme === 'dark') {
+    return {
+      background: '#1e1e1e',
+      text: '#ffffff',
+      close: '#bb86fc',
+    };
+  }
+
+  if (typeof theme === 'object' && theme.colors?.background) {
+    return {
+      background: theme.colors.background,
+      text: theme.colors.text ?? '#000000',
+      close: '#6200ee',
+    };
+  }
+
+  return {
+    background: '#ffffff',
+    text: '#000000',
+    close: '#6200ee',
+  };
 }
 
 const LoggerModal: React.FC<LoggerModalProps> = ({
@@ -33,6 +59,8 @@ const LoggerModal: React.FC<LoggerModalProps> = ({
   compact = false,
   onBackPressed,
 }) => {
+  const colors = getModalColors(theme);
+
   return (
     <Modal
       visible={visible}
@@ -41,14 +69,23 @@ const LoggerModal: React.FC<LoggerModalProps> = ({
       onRequestClose={onBackPressed || onClose}
     >
       <View style={styles.modalOverlay}>
-        <View style={[styles.modalContent, { height: `${height * 100}%` }]}>
+        <View
+          style={[
+            styles.modalContent,
+            { height: `${height * 100}%`, backgroundColor: colors.background },
+          ]}
+        >
           <View style={styles.header}>
-            <Text style={styles.headerText}>Network Logs</Text>
+            <Text style={[styles.headerText, { color: colors.text }]}>
+              Network Logs
+            </Text>
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>Close</Text>
+              <Text style={[styles.closeButtonText, { color: colors.close }]}>
+                Close
+              </Text>
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={styles.loggerContainer}>
             <NetworkLogger
               theme={theme}
               sort={sort}
@@ -69,7 +106,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
@@ -88,8 +124,10 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   closeButtonText: {
-    color: '#6200ee',
     fontSize: 16,
+  },
+  loggerContainer: {
+    flex: 1,
   },
 });
 

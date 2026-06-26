@@ -19,46 +19,44 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
   position,
   style,
 }) => {
-  const translateX = useRef(new Animated.Value(position?.right || 15)).current;
-  const translateY = useRef(
-    new Animated.Value(position?.bottom || 100)
-  ).current;
-  const lastOffset = useRef({
-    x: position?.right || 15,
-    y: position?.bottom || 100,
-  });
+  const initialX = position?.right ?? 15;
+  const initialY = position?.bottom ?? 100;
+  const translateX = useRef(new Animated.Value(initialX)).current;
+  const translateY = useRef(new Animated.Value(initialY)).current;
+  const lastOffset = useRef({ x: initialX, y: initialY });
 
   const panGesture = Gesture.Pan()
     .onUpdate((event) => {
-      translateX.setValue(event.translationX + lastOffset.current.x);
-      translateY.setValue(event.translationY + lastOffset.current.y);
+      translateX.setValue(lastOffset.current.x + event.translationX);
+      translateY.setValue(lastOffset.current.y + event.translationY);
     })
-    .onEnd(() => {
-      translateX.extractOffset();
-      translateY.extractOffset();
-      translateX.addListener(({ value }) => {
-        lastOffset.current.x = value;
-      });
-      translateY.addListener(({ value }) => {
-        lastOffset.current.y = value;
-      });
+    .onEnd((event) => {
+      lastOffset.current = {
+        x: lastOffset.current.x + event.translationX,
+        y: lastOffset.current.y + event.translationY,
+      };
+      translateX.setValue(lastOffset.current.x);
+      translateY.setValue(lastOffset.current.y);
     });
 
+  const tapGesture = Gesture.Tap().onEnd(() => {
+    onPress?.();
+  });
+
+  const gesture = Gesture.Exclusive(panGesture, tapGesture);
+
   return (
-    <GestureDetector gesture={panGesture}>
+    <GestureDetector gesture={gesture}>
       <Animated.View
         style={[
           styles.draggableContainer,
           style,
           {
-            transform: [{ translateX: translateX }, { translateY: translateY }],
+            transform: [{ translateX }, { translateY }],
           },
         ]}
       >
-        <Animated.View
-          style={[styles.button, { backgroundColor: color }]}
-          onTouchEnd={onPress}
-        >
+        <Animated.View style={[styles.button, { backgroundColor: color }]}>
           {icon || (
             <Icon type={Icons.MaterialIcons} name="expand-less" size={30} />
           )}

@@ -19,9 +19,27 @@ Whether you're debugging API issues, inspecting backend communication, or valida
 ## Installation
 
 ```sh
-npm install react-native-netlog-fab
+npm install react-native-netlog-fab react-native-network-logger react-native-gesture-handler
 # or using yarn
-yarn add react-native-netlog-fab
+yarn add react-native-netlog-fab react-native-network-logger react-native-gesture-handler
+```
+
+> **Note:** `react-native-network-logger` is a peer dependency and must be installed in your app. `react-native-gesture-handler` is required for the draggable FAB.
+
+Wrap your app root with `GestureHandlerRootView` (required by `react-native-gesture-handler`):
+
+```jsx
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { NetworkLoggerFAB } from 'react-native-netlog-fab';
+
+export default function App() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <YourApp />
+      <NetworkLoggerFAB />
+    </GestureHandlerRootView>
+  );
+}
 ```
 
 ## Dependencies
@@ -38,7 +56,7 @@ This package has the following dependencies:
 
 - `react-native-gesture-handler` ^2.25.0
 
-Make sure to install these dependencies in your project. The peer dependencies are required for the package to work properly, while the required dependencies will be installed automatically when you install `react-native-netlog-fab`.
+Make sure to install these dependencies in your project. The peer dependencies are required for the package to work properly, while `react-native-gesture-handler` will be installed automatically when you install `react-native-netlog-fab`.
 
 For more details, see the Medium article: [Introducing react-native-netlog-fab: Effortless In-App Network Debugging for React Native](https://medium.com/@ashraz.developer/introducing-react-native-netlog-fab-effortless-in-app-network-debugging-for-react-native-862ee0d57395)
 

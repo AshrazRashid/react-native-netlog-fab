@@ -5,7 +5,7 @@ import LoggerModal from './LoggerModal';
 import Icon, { Icons } from './Icons';
 import { startNetworkLogging } from 'react-native-network-logger';
 
-interface NetworkLoggerFABProps {
+export interface NetworkLoggerFABProps {
   // FAB Props
   color?: string;
   icon?: React.ReactNode | string;
@@ -65,9 +65,13 @@ const NetworkLoggerFAB: React.FC<NetworkLoggerFABProps> = ({
   forceEnable = false,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const isActive = showIn === 'always' || __DEV__;
 
   useEffect(() => {
-    // Start network logging with the provided options
+    if (!isActive) {
+      return;
+    }
+
     startNetworkLogging({
       maxRequests,
       ignoredHosts,
@@ -75,7 +79,18 @@ const NetworkLoggerFAB: React.FC<NetworkLoggerFABProps> = ({
       ignoredPatterns,
       forceEnable,
     });
-  }, [maxRequests, ignoredHosts, ignoredUrls, ignoredPatterns, forceEnable]);
+  }, [
+    isActive,
+    maxRequests,
+    ignoredHosts,
+    ignoredUrls,
+    ignoredPatterns,
+    forceEnable,
+  ]);
+
+  if (!isActive) {
+    return null;
+  }
 
   const handlePress = () => {
     setIsModalVisible(true);
@@ -85,12 +100,6 @@ const NetworkLoggerFAB: React.FC<NetworkLoggerFABProps> = ({
     setIsModalVisible(false);
   };
 
-  // Only render in development if showIn is 'dev'
-  if (showIn === 'dev' && __DEV__ === false) {
-    return null;
-  }
-
-  // Render the icon based on the type of icon prop
   const renderIcon = () => {
     if (React.isValidElement(icon)) {
       return icon;
@@ -105,7 +114,6 @@ const NetworkLoggerFAB: React.FC<NetworkLoggerFABProps> = ({
         />
       );
     }
-    // Default icon if none provided
     return (
       <Icon
         type={Icons.MaterialIcons}
